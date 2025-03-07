@@ -6,4 +6,8 @@ This repository contains my answers for the C++ practical assignments (TP). Each
 - **TP2** - Getting Started
 - **TP3** - Variables et Constantes en C++
 - **TP4** - Conteneurs en C++
+- **TP5** - Advanced Strings
+- **TP6** - Pointers & Smart Pointers
+- **TP7** - OOP
+- 
 
