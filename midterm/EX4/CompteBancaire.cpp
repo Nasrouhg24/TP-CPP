@@ -30,11 +30,49 @@
 // #include <thread>     // For multithreading
 // #include <queue>      // For queue data structure
 // #include <stack>      // For stack data structure
+#include "CompteBancaire.h"
+#include <memory>
 
 using namespace std;
 
-int main() {
-  
+CompteBancaire::CompteBancaire(shared_ptr<string> nom , string numero ,shared_ptr<string> cinValue,double soldeInitial =100){
 
-    return 0;
-}
+  if (soldeInitial >= 0){
+    nomProprietaire = make_shared<string>(*nom);
+    numeroCompte = make_unique<string>(numero);
+    cin = make_shared<string>(*cinValue);
+    solde = soldeInitial;
+  }
+  else{
+    cout << "Le solde initial doit etre positif" << endl;
+  }
+
+};
+
+void CompteBancaire::deposer(double montant){
+  if (montant >= 0){
+    solde += montant;
+  }
+  else{
+    cout << "Le montant doit etre positif" << endl;
+  }
+};
+bool CompteBancaire::retirer(double montant){
+  if (montant >= 0 && montant <= solde){
+    solde -= montant;
+    return true;
+  }
+  cout << "Le montant doit etre positif et inferieur au solde" << endl;
+  return false;
+
+};
+
+void CompteBancaire::afficher() const{
+  cout << "Nom du proprietaire : " << *nomProprietaire<<", ";
+  cout <<"CIN: " << *cin << ", ";
+  cout <<"Numero: " << *numeroCompte << ", ";
+  cout <<"Solde: " << solde <<"MAD"<< endl;
+};
+
+
+

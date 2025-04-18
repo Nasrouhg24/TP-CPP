@@ -30,11 +30,60 @@
 // #include <thread>     // For multithreading
 // #include <queue>      // For queue data structure
 // #include <stack>      // For stack data structure
+#include "Banque.h"
+#include "CompteBancaire.h"
+#include <memory>
 
 using namespace std;
+CompteBancaire*  Banque::ChercherCompte(const string& numero){
+  for (int i = 0; i < comptes.size(); i++) {
+    if (*(comptes[i].numeroCompte) == numero){
+      return &comptes[i];
 
-int main() {
-  
+    }
+  }
+  return nullptr;
 
-    return 0;
 }
+
+
+void Banque::ajouterCompte(CompteBancaire&& compte){
+  comptes.push_back(move(compte));
+}
+
+
+void Banque::suppimerCompte(const string& numero){
+
+
+  for (int i = 0; i < comptes.size(); i++) {
+    if (*(comptes[i].numeroCompte) == numero){
+      comptes.erase(comptes.begin()+i);
+      cout <<"Compte "<<numero<<" supprimé avec succés"<<endl;
+
+    }
+  }
+};
+
+void Banque::afficherComptes() const {
+  for (auto& compte : this->comptes) {
+    compte.afficher();
+  }
+}
+
+void Banque::afficherComptesParNom(const string& nom) const {
+  for (auto& compte : this->comptes) {
+    if (*(compte.nomProprietaire) == nom){
+      compte.afficher();
+    }
+  }
+}
+
+void Banque::afficherComptesParCin(const string& cin) const {
+  for (auto& compte : this->comptes) {
+    if (*(compte.cin) == cin){
+      compte.afficher();
+    }
+  }
+}
+
+

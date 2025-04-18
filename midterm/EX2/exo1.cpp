@@ -33,8 +33,21 @@
 
 using namespace std;
 
+bool estParfait(int n){
+  int sum=0;
+  for(int i =1 ;i<n;i++){
+    if (n%i==0){
+      sum +=i;
+    }
+
+  }
+  return sum==n;
+
+};
+
 int main() {
-  
+  cout << "est ce que 6 est un nombre parfait :"<<estParfait(6)<<endl;
+  cout << "est ce que 12 est un nombre parfait :"<<estParfait(12)<<endl;
 
     return 0;
 }

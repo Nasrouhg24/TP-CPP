@@ -30,11 +30,53 @@
 // #include <thread>     // For multithreading
 // #include <queue>      // For queue data structure
 // #include <stack>      // For stack data structure
-
+#include "Banque.h"
+#include "CompteBancaire.h"
 using namespace std;
 
 int main() {
-  
+
+  auto aliceNom = make_shared<string>("Alice");
+  auto aliceCin = make_shared<string>("CIN001");
+
+  Banque mabanque;
+  mabanque.ajouterCompte(CompteBancaire(aliceNom, "C001",aliceCin, 1000.0));
+  mabanque.ajouterCompte(CompteBancaire(aliceNom, "C002",aliceCin, 500.0));
+
+
+  auto bobNom = make_shared<string>("Bob");
+  auto bobCin = make_shared<string>("CIN002");
+  mabanque.ajouterCompte(CompteBancaire(bobNom, "C003",bobCin, 750.0));
+
+
+  cout <<"Comptes initiaux :"<<endl;
+  mabanque.afficherComptes();
+
+
+
+
+
+
+
+  auto compte = mabanque.ChercherCompte("C001");
+  if (compte) {
+    compte -> deposer(2000.0);
+    compte -> retirer(150.0);
+
+
+
+  }
+
+  cout<<"Recherche par nom Alice:"<<endl;
+  mabanque.afficherComptesParNom("Alice");
+
+  cout<<"Recherche par cin 'CIN001':"<<endl;
+  mabanque.afficherComptesParCin("CIN001");
+
+
+  cout << "Comptes finaux :"<<endl;
+  mabanque.suppimerCompte("C001");
+  mabanque.afficherComptes();
 
     return 0;
 }

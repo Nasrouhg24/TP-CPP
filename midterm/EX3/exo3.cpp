@@ -33,8 +33,51 @@
 
 using namespace std;
 
+vector<vector<string>> organiserEtudiants(vector<string> etudiants,string etalon){
+  vector<vector<string>> resultat;
+  vector<string> groupe;
+  set<string> etudiantsSet;
+  for(auto etudiant:etudiants){
+    etudiantsSet.insert(etudiant);
+  }
+  for(auto etudiant:etudiantsSet){
+    if (groupe.size()<3){
+      groupe.push_back(etudiant);
+    }
+    else{
+      resultat.push_back(groupe);
+      groupe.clear();
+      groupe.push_back(etudiant);
+    }
+  }
+  if (groupe.size()<3){
+    for(int i =0;i<(3-groupe.size()+1);i++){
+      groupe.push_back(etalon);
+    }
+    resultat.push_back(groupe);
+  }
+  return resultat;
+};
+
+
+
+void afficherGroupes(vector<vector<string>> groupes){
+  cout <<"Groupes d'étudiants (3 par groupe) :"<<endl;
+
+  for(int i= 0;i< groupes.size();i++){
+    for(auto etudiant:groupes[i]){
+      cout<<etudiant<<" ";
+    }
+    cout<<endl;
+  }
+}
+
 int main() {
-  
+    vector<string> etudiants= {"Ali","Fatima" ,"Yassine","Omar","Khadija","Amina","Yassine","Ali","Rachid","Sofia","Hassan","Kamal"};
+    string etalon="Inconnu";
+    vector<vector<string>> groupes= organiserEtudiants(etudiants,etalon);
+
+    afficherGroupes(groupes);
 
     return 0;
 }
