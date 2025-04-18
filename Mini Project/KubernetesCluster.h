@@ -33,7 +33,7 @@ class KubernetesCluster{
      void addNode(shared_ptr<Server> node);
      bool removePod(const string& name);
      void deployPod(unique_ptr<Pod> pod);
-     bool schedulePod(Pod& pod);// will search for a possible server and if exists make the changes and return true elsee false
+     Server* schedulePod(Pod& pod);// will search for a possible server and if exists make the changes and return true elsee false
      Pod* getPod(const string& name);
      string getMetrics() const;
      friend ostream& operator<<(ostream& os, const KubernetesCluster& c);

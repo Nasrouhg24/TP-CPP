@@ -53,10 +53,11 @@ bool KubernetesCluster::removePod(const string& name){
 void KubernetesCluster::deployPod(std::unique_ptr<Pod> pod) {
 
 
-
- 	if (schedulePod(*pod)) {
+    Server* server = schedulePod(*pod);
+ 	if (server) {
         cout << "-> Déploiement du Pod " << *pod ;
         pod->deploy();
+        cout << "sur le noeud " << (*server) <<endl;
         cout << "Pod " << *pod << "déployé avec succès.\n";
         pods_.push_back(std::move(pod));
     } else {
@@ -65,17 +66,17 @@ void KubernetesCluster::deployPod(std::unique_ptr<Pod> pod) {
 }
 
 
-bool KubernetesCluster::schedulePod(Pod& pod){
+Server* KubernetesCluster::schedulePod(Pod& pod){
   double sum_cpu = pod.getTotalCpu();
   double sum_memory = pod.getTotalMemory();
 
 
   for (auto& node : nodes_) {
         if (node->allocate(sum_cpu, sum_memory)) {
-            return true;
+            return node.get();
         }
     }
-    return false;
+    return nullptr;
 }
 
 
