@@ -11,4 +11,6 @@ This repository contains my answers for the C++ practical assignments (TP). Each
 - **TP7** - OOP
 - **TP8** - OOP Constructeurs
 - **TP9** - Héritage sans polymorphisme
+- **TP10** - Templates
+- **TP11** - Exceptions
   
