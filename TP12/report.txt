@@ -1,0 +1,4 @@
+Nom                 Âge      Salaire        
+Alice               30        500000.50      
+Mouad               20        1200000.30     
+Ibhi                40        1929292929.90  

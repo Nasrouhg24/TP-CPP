@@ -1,0 +1,3 @@
+C++ is amazing
+CTF FLa
+FLAG{U_FOUND_TH3_FL45}
