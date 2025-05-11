@@ -1,14 +1,14 @@
 CXX = g++
 CXXFLAGS = -std=c++17 -Wall -Wextra
-OBJS = main.o Ressource.o Container.o Pod.o Server.o KubernetesCluster.o Cloud_Util.o
+OBJS = main2.o Ressource.o Container.o Pod.o Server.o KubernetesCluster.o Cloud_Util.o CloudExceptions.o
 
-all: cloud
+all: cloud_2
 
-cloud: $(OBJS)
-	$(CXX) $(CXXFLAGS) -o cloud $(OBJS)
+cloud_2: $(OBJS)
+	$(CXX) $(CXXFLAGS) -o cloud_2 $(OBJS)
 
 %.o: %.cpp
 	$(CXX) $(CXXFLAGS) -c $<
 
 clean:
-	rm -f *.o cloud
+	rm -f *.o cloud_2

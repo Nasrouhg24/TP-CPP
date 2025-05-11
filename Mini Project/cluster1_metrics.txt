@@ -1,0 +1,3 @@
+=== Cluster Metrics ===
+[Server: nodeX  | Total: 12      CPU, 12048    MBU| Free: 12         CPU, 12048      MB]
+

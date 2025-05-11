@@ -28,3 +28,5 @@ using namespace std;
 
 void display(const KubernetesCluster& cluster);
 void deployPods(KubernetesCluster& cluster,vector<unique_ptr<Pod>>& pods);
+void saveClusterMetrics(const KubernetesCluster& cluster, const std::string& filename);
+void forEachContainer(const KubernetesCluster& cluster, const std::function<void(const Container&)>& func);

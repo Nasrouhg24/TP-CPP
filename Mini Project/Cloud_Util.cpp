@@ -30,7 +30,9 @@
 // #include <thread>     // For multithreading
 // #include <queue>      // For queue data structure
 // #include <stack>      // For stack data structure
+#include <fstream>
 #include "Cloud_Util.h"
+#include "CloudExceptions.h"
 using namespace std;
 
 void display(const KubernetesCluster& cluster){
@@ -38,9 +40,33 @@ void display(const KubernetesCluster& cluster){
 }
 void deployPods(KubernetesCluster& cluster,vector<unique_ptr<Pod>>& pods){
   for (auto& pod : pods) {
-        cluster.deployPod(std::move(pod));
+    try {
+        cluster.deployPod(std::move(pod));}
+    catch (AllocationException& ex) {
+      cerr<<ex.what()<<endl;
+    }
   }
     pods.clear();
+}
+void saveClusterMetrics(const KubernetesCluster& cluster, const std::string& filename){
+  ofstream out(filename);
+  if (out.is_open()) {
+    out << cluster.getMetrics() << endl;
+
+  }
+  else {
+    string msg = "FileException : Could not open file " + filename + " for writing.";
+    throw FileException(msg);
+  }
+};
+
+
+void forEachContainer(const KubernetesCluster& cluster, const std::function<void(const Container&)>& func){
+  for (auto& pod : cluster.getPods()) {
+	for (auto& container : pod->getContainers()) {
+          func(*container);
+	}
+  }
 }
 
 

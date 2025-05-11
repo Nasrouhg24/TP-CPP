@@ -1,11 +1,11 @@
 /**
  * Author: Nasreddine El Gourji
- * Created on: 14.04.2025 at 14:59
- * Description: Container.cpp
+ * Created on: 05.05.2025 at 14:36
+ * Description: CloudExceptions.cpp
  */
 
 //
-// Created by nasre on 14.04.2025.
+// Created by nasre on 05.05.2025.
 //
 
 
@@ -30,39 +30,19 @@
 // #include <thread>     // For multithreading
 // #include <queue>      // For queue data structure
 // #include <stack>      // For stack data structure
-#include <iomanip>
-#include "Container.h"
+#include "CloudExceptions.h"
 using namespace std;
 
+// Implémentation de base
+CloudExceptions::CloudExceptions(const std::string& msg)
+    : std::runtime_error(msg) {}
+
+// Exception d'allocation
+AllocationException::AllocationException(const std::string& msg)
+    : CloudExceptions("Allocation Error: " + msg) {}
+
+// Exception de fichier
+FileException::FileException(const std::string& msg)
+    : CloudExceptions("File Error: " + msg) {}
 
 
-
-Container::Container(string id , string image , double cpu , double memory ):Ressource(id,cpu,memory),image_(image){};
-
-
-
-void Container::start(){
-  active_ = true;
-}
-
-void Container::stop(){
-  active_ = false;
-}
-
-
-
-string Container::getMetrics() const {
-    std::ostringstream oss;
-    oss << "[Container: " <<left <<setw(10)<< id_  <<": "<<left <<setw(7)<< cpu_ << " CPU, " <<left <<setw(7)<< memory_ << " Memory , " << image_<< "]";
-    return oss.str();
-};
-
-ostream& operator<<(ostream& os, const Container& c) {
-  os << c.getMetrics();
-  return os;
-};
-
-
-//adding this to use in the KUb...
-double Container::getCpu() const {return cpu_;}
-double Container::getMemory() const {return memory_;}

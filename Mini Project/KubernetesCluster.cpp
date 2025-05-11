@@ -31,6 +31,8 @@
 // #include <queue>      // For queue data structure
 // #include <stack>      // For stack data structure
 #include "KubernetesCluster.h"
+#include "CloudExceptions.h"
+
 using namespace std;
 
 void KubernetesCluster::addNode(shared_ptr<Server> node){
@@ -52,17 +54,21 @@ bool KubernetesCluster::removePod(const string& name){
 
 void KubernetesCluster::deployPod(std::unique_ptr<Pod> pod) {
 
+  try {
+  Server* server = schedulePod(*pod);
+  if (server == nullptr) {
+    throw AllocationException("Pas de serveur");
+  }
+  cout << "-> Déploiement du Pod " << *pod ;
+  pod->deploy();
+  cout << "sur le noeud " << (*server) <<endl;
 
-    Server* server = schedulePod(*pod);
- 	if (server) {
-        cout << "-> Déploiement du Pod " << *pod ;
-        pod->deploy();
-        cout << "sur le noeud " << (*server) <<endl;
-        cout << "Pod " << *pod << "déployé avec succès.\n";
-        pods_.push_back(std::move(pod));
-    } else {
-        cout << "Échec du déploiement du pod " << *pod << ": ressources insuffisantes.\n";
-    }
+  pods_.push_back(std::move(pod));
+
+  }
+  catch(const AllocationException& ex) {
+   	throw ex;
+  }
 }
 
 
@@ -72,10 +78,17 @@ Server* KubernetesCluster::schedulePod(Pod& pod){
 
 
   for (auto& node : nodes_) {
+    try{
         if (node->allocate(sum_cpu, sum_memory)) {
+
             return node.get();
         }
+    }catch(AllocationException& ex){
+
     }
+ 	}
+
+
     return nullptr;
 }
 

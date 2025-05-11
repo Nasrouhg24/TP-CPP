@@ -32,6 +32,8 @@ class Server: public Ressource {
     bool allocate(double cpu, double memory);
     void start() override;
     void stop() override;
+    string get_id() const ;
     string getMetrics() const override;
     friend ostream& operator<<(ostream& os, const Server& server);
+    bool isActive() const; //for the function in the main
 };

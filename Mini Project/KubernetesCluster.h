@@ -20,8 +20,10 @@
 #include <bitset>
 #include <algorithm>
 #include <memory>
+#include <functional>
 #include "Server.h"
 #include "Pod.h"
+
 
 using namespace std;
 class KubernetesCluster{
@@ -37,5 +39,17 @@ class KubernetesCluster{
      Pod* getPod(const string& name);
      string getMetrics() const;
      friend ostream& operator<<(ostream& os, const KubernetesCluster& c);
+      vector<shared_ptr<Server>> getFilteredServers(const function<bool  (const Server&) >& func){
+        vector<shared_ptr<Server>> filtered;
+        for(const auto& node : nodes_){
+          if(func(*node)){
+            filtered.push_back(node);
+          }
+        }
+        return filtered;
+     }
+    const vector<unique_ptr<Pod>>& getPods() const {return pods_;};
 };
+
+
 
